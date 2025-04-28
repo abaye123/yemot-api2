@@ -86,18 +86,6 @@ const y = new yemot_api(username, password, config, ym_server);
 - `ini_settings_obj` - אובייקט או מחרוזת עם תוכן הקובץ
 **החזרה**: Promise עם תוצאת ההעלאה.
 
-### `text_to_speech(text, googleApiKey, path, options)`
-המרת טקסט לקובץ שמע באמצעות Google TTS API והעלאתו לשרת ימות.
-- `text` - הטקסט להמרה לשמע
-- `googleApiKey` - מפתח API של Google Cloud
-- `path` - נתיב היעד בשרת ימות
-- `options` - אובייקט עם אפשרויות נוספות (אופציונלי):
-  - `voice` - הקול לשימוש (ברירת מחדל: 'he-IL-Wavenet-D')
-  - `speed` - מהירות הדיבור (ברירת מחדל: 1.0)
-  - `filename` - שם קובץ מותאם אישית (ברירת מחדל: שתי המילים הראשונות של הטקסט)
-  - `convertAudio` - האם להמיר את פורמט האודיו (ברירת מחדל: true)
-**החזרה**: Promise עם תוצאת ההעלאה.
-
 ## דוגמת שימוש
 ```js
 import YemotApi from 'yemot-api';
@@ -126,19 +114,6 @@ const main = async () => {
         console.log(downloadResult);
     } catch (error) {
         console.error('שגיאה בהורדת הקובץ:', error);
-    }
-    
-    // המרת טקסט לשמע והעלאה לימות
-    try {
-        const googleApiKey = "YOUR_GOOGLE_API_KEY";
-        const text = "שלום, זוהי הודעה לדוגמה";
-        const ttsResult = await y.text_to_speech(text, googleApiKey, "ivr/welcome.mp3", {
-            voice: "he-IL-Wavenet-D",
-            speed: 1.0
-        });
-        console.log(ttsResult);
-    } catch (error) {
-        console.error('שגיאה בהמרת טקסט לשמע:', error);
     }
 };
 
