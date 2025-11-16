@@ -1,6 +1,8 @@
 # yemot-api
 
-# install
+ספריית Node.js לעבודה עם API של מערכת יומות (Call2All).
+
+# התקנה
 ```bash
 npm i yemot-api
 ```
@@ -8,16 +10,31 @@ npm i yemot-api
 # תיעוד הפונקציות
 
 ## מחלקה ראשית
+
+### דרך 1: שימוש במפתח API (מומלץ)
+```js
+const yemot_api = require("yemot-api");
+const y = new yemot_api({ apiKey: "YOUR_API_KEY_HERE" });
+```
+
+**אובייקט אפשרויות:**
+- `apiKey` - מפתח API קבוע (חובה)
+- `config` - אובייקט הגדרות נוספות ל-axios (אופציונלי)
+- `ym_server` - שרת ימות (אופציונלי, ברירת מחדל: "ym")
+
+### דרך 2: שימוש עם username/password (כרגע לא פעיל - בעתיד ימומש עם אימות דו-שלבי)
 ```js
 const yemot_api = require("yemot-api");
 const y = new yemot_api(username, password, config, ym_server);
 ```
 
-### פרמטרים:
+**פרמטרים:**
 - `username` - שם משתמש ביומות
 - `password` - סיסמה ביומות
 - `config` - אובייקט הגדרות נוספות ל-axios (אופציונלי)
 - `ym_server` - שרת ימות (ברירת מחדל: "ym")
+
+**הערה:** האפשרות להתחברות עם username/password תתמוך בעתיד גם באימות דו-שלבי.
 
 ## פונקציות המחלקה:
 
@@ -87,15 +104,31 @@ const y = new yemot_api(username, password, config, ym_server);
 **החזרה**: Promise עם תוצאת ההעלאה.
 
 ## דוגמת שימוש
+
+### שימוש עם מפתח API (מומלץ)
 ```js
-import YemotApi from 'yemot-api';
+const YemotApi = require('yemot-api');
 
 const main = async () => {
-    const y = new YemotApi("0773137770", "1234");
+    // אתחול עם מפתח API
+    const y = new YemotApi({ apiKey: "YOUR_API_KEY_HERE" });
 
-    // קבלת מספר יחידות
-    let session = await y.get_session();
-    console.log(session);
+    // קבלת מידע על החשבון (מבצע אימות אוטומטי של המפתח)
+    const session = await y.get_session();
+    console.log(session.data);
+    // תוצאה לדוגמה:
+    // {
+    //   "responseStatus": "OK",
+    //   "name": "abaye",
+    //   "units": 0,
+    //   "unitsExpireDate": "2017-01-26",
+    //   "organization": "",
+    //   "contactName": "055555555",
+    //   "phones": "055555555",
+    //   "email": "ex@gmail.com",
+    //   "username": "0777777777",
+    //   "yemotAPIVersion": 6
+    // }
 
     // העלאת קובץ
     const file = {
@@ -115,7 +148,32 @@ const main = async () => {
     } catch (error) {
         console.error('שגיאה בהורדת הקובץ:', error);
     }
+
+    // יצירת שלוחה חדשה
+    await y.create_ext("/1", {
+        type: "menu",
+        white_list: "yes"
+    });
+
+    // העלאת קובץ רשימה לבנה
+    await y.upload_txt_file("/1/WhiteList.ini", [
+        "0773137770",
+        "0548451263"
+    ]);
 };
 
 main().catch(console.error);
+```
+
+### אפשרויות נוספות באתחול
+```js
+// אתחול עם הגדרות מותאמות אישית
+const y = new YemotApi({ 
+    apiKey: "YOUR_API_KEY_HERE",
+    ym_server: "ym",  // או "ym2", "ym3", וכו'
+    config: {
+        timeout: 30000,  // הגדרות axios
+        // ... הגדרות נוספות
+    }
+});
 ```

@@ -2,12 +2,16 @@ const yemot_api = require("./");
 
 (async () => {
 
-	const y = new yemot_api("0773137770", "1234");
+	// דרך 1: שימוש במפתח API (מומלץ)
+	const y = new yemot_api({ apiKey: "YOUR_API_KEY_HERE" });
+	
+	// דרך 2: שימוש עם username ו-password (לעתיד - עם אימות דו שלבי)
+	// const y = new yemot_api("0773137770", "1234");
 
-	/** קבלת מספר יחידות */
+	/** קבלת מספר יחידות ומידע על החשבון */
 	let r = await y.get_session();
 
-	console.log(r);
+	console.log(r.data);
 
 	/** העלאת קובץ */
 	const file = {
