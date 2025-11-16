@@ -158,7 +158,7 @@ const main = async () => {
     // העלאת קובץ רשימה לבנה
     await y.upload_txt_file("/1/WhiteList.ini", [
         "0773137770",
-        "0548451263"
+        "055555555"
     ]);
 };
 
