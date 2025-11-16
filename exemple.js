@@ -2,18 +2,18 @@ const yemot_api = require("./");
 
 (async () => {
 
-	// דרך 1: שימוש במפתח API (מומלץ)
+	// Method 1: Using API key (recommended)
 	const y = new yemot_api({ apiKey: "YOUR_API_KEY_HERE" });
 	
-	// דרך 2: שימוש עם username ו-password (לעתיד - עם אימות דו שלבי)
+	// Method 2: Using username and password (for future use with 2FA)
 	// const y = new yemot_api("0773137770", "1234");
 
-	/** קבלת מספר יחידות ומידע על החשבון */
+	// Get account units and information
 	let r = await y.get_session();
 
 	console.log(r.data);
 
-	/** העלאת קובץ */
+	// Upload file
 	const file = {
 		value: "12345",
 		options: {
@@ -24,7 +24,7 @@ const yemot_api = require("./");
 
 	await y.upload_file("ivr/123.txt", file);
 
-	/** הורדת קובץ */
+	// Download file
 	try {
 		r = await y.download_file("ivr/123.txt");
 	} catch (error) {
@@ -33,8 +33,7 @@ const yemot_api = require("./");
 
 	console.log(r);
 
-	/** הוספת שלוחה חדשה */
-
+	// Create new extension
 	await y.create_ext("/1", {
 		type: "menu",
 		white_list: "yes"
