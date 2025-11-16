@@ -5,7 +5,14 @@ const yemot_api = require("./");
 	// Method 1: Using API key (recommended)
 	const y = new yemot_api({ apiKey: "YOUR_API_KEY_HERE" });
 	
-	// Method 2: Using username and password (for future use with 2FA)
+	// Method 2: Using API key with system number validation
+	// This will validate that the API key belongs to the specified system number
+	// const y = new yemot_api({ 
+	//     apiKey: "YOUR_API_KEY_HERE",
+	//     systemNumber: "0773137770" 
+	// });
+	
+	// Method 3: Using username and password (for future use with 2FA)
 	// const y = new yemot_api("0773137770", "1234");
 
 	// Get account units and information
