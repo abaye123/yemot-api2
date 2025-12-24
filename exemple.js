@@ -2,18 +2,27 @@ const yemot_api = require("./");
 
 (async () => {
 
-	// Method 1: Using API key (recommended)
-	const y = new yemot_api({ apiKey: "YOUR_API_KEY_HERE" });
+	// Method 1: Default - Using system number + API key (recommended)
+	// By default, the second parameter is treated as API key
+	const y = new yemot_api("0773137770", "YOUR_API_KEY_HERE");
 	
-	// Method 2: Using API key with system number validation
-	// This will validate that the API key belongs to the specified system number
+	// Method 2: Using null + API key (without system number validation)
+	// const y = new yemot_api(null, "YOUR_API_KEY_HERE");
+	
+	// Method 3: Using object syntax with API key
 	// const y = new yemot_api({ 
 	//     apiKey: "YOUR_API_KEY_HERE",
 	//     systemNumber: "0773137770" 
 	// });
 	
-	// Method 3: Using username and password (for future use with 2FA)
-	// const y = new yemot_api("0773137770", "1234");
+	// Method 4: Using object syntax - API key only (without system number validation)
+	// const y = new yemot_api({ apiKey: "YOUR_API_KEY_HERE" });
+	
+	// Method 5: Using username and password with 2FA - pass true as third parameter
+	// const y = new yemot_api("0773137770", "1234", true);
+	
+	// Method 6: Using username and password with 2FA - using config object
+	// const y = new yemot_api("0773137770", "1234", { use2FA: true });
 
 	// Get account units and information
 	let r = await y.get_session();
